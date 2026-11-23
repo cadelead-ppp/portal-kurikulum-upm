@@ -228,7 +228,7 @@ function render(){
   e.innerHTML=`<span class="num">${x.k}</span>${x.soon?'<span class="soon">AKAN DATANG</span>':''}<div class="ic"><img src="${ICONS[x.k]}" alt=""></div><h3>${x.t}</h3><p>${x.d}</p><span class="go">Ketahui Lebih Lanjut →</span>`;
   e.onclick=()=>open(x.k);grid.append(e)});
  $("#meta").textContent=r.length+" daripada 11 elemen utama PdP dipaparkan";
- $("#empty").style.display=r.length?"none":"block";
+ $("#empty").style.display=r.length?"none":"block";eqh();
 }
 function open(k){const x=ITEMS.find(i=>i.k==k);$("#dn").innerHTML='<img src="'+ICONS[x.k]+'" alt="" style="width:44px;height:44px;display:block">';$("#dt").textContent=x.k+". "+x.t;
  $("#db").innerHTML=`<p>${x.d}</p>${x.p?"<p>"+x.p+"</p>":""}<ul>${x.b.map(l=>"<li>"+l+"</li>").join("")}</ul>`+(x.l?'<p><b>Templat &amp; dokumen berkaitan</b></p><ul>'+x.l.map(a=>'<li><a href="'+a[1]+'" target="_blank" rel="noopener" style="color:var(--red)">'+a[0]+'</a></li>').join("")+'</ul>':"")+(x.s?'<p><b>Slaid berkaitan (klik untuk besarkan)</b></p>'+x.s.map((s,i)=>'<img class="sl" src="'+s+'" alt="Slaid PLO12 '+(i+1)+'" onclick="zoom(this.src)">').join(""):"")+
@@ -244,6 +244,8 @@ $("#hkx").onclick=()=>$("#hk").close();$("#hk").addEventListener("click",e=>{if(
 $("#mnu").onclick=()=>{const n=$("#nv").parentElement,o=n.classList.toggle("open");$("#mnu").setAttribute("aria-expanded",o)};
 document.querySelectorAll("#nv a:not([data-hk])").forEach(a=>a.addEventListener("click",()=>$("#nv").parentElement.classList.remove("open")));
 if(window.self!==window.top)document.documentElement.classList.add("framed");
+function eqh(){const cs=[...grid.children],hs=cs.map(c=>c.querySelector("h3"));hs.forEach(h=>h.style.minHeight="");const rows={};cs.forEach((c,i)=>{(rows[c.offsetTop]=rows[c.offsetTop]||[]).push(hs[i])});Object.values(rows).forEach(r=>{const m=Math.max(...r.map(h=>h.offsetHeight));r.forEach(h=>h.style.minHeight=m+"px")})}
+window.addEventListener("resize",eqh);window.addEventListener("load",eqh);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(eqh);
 function zoom(s){$("#lbi").src=s;$("#lb").showModal()}
 render();
 </script></body></html>
